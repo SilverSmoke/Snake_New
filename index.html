@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <style>
+    .field{
+      position:relative;
+      background:green;
+      height:500px;
+      width:500px;
+      top:100px;
+      margin-left:auto;
+      margin-right:auto;
+      border:solid red 5px;
+    }
+    .snake_head{
+      position:relative;
+      width:10px;
+      height:10px;
+      background:yellow;
+      border-radius:5px 5px 5px 5px;
+    }
+    </style>
+  </head>
+  <body>
+    
+    <div class="field" id="field">
+    
+    </div>
+    
+    <script>
+    onclick = function(e){
+      console.log(e);
+    }
+    "use strict"
+    onload = function(){
+      //console.log("Ура Работает1!!!");
+      var field = document.getElementById("field");
+      var x0 = field.offsetLeft;
+      var y0 = field.offsetTop;
+      var x_max = x0 + field.offsetWidth;
+      var y_max = y0 + field.offsetHeight;
+      console.log(x0,y0,x_max,y_max);//test
+      
+      var Snake = function(){
+        var snake_head = document.createElement('div');
+        snake_head.className = "snake_head";
+        
+        var snake_hPos = field.offsetWidth/2;
+        var snake_vPos = field.offsetHeight/2;
+        
+        snake_head.style.left = snake_hPos + "px";
+        snake_head.style.top = snake_vPos + "px";
+        
+        //console.log(snake_head.style.top);//test
+        
+        field.appendChild(snake_head);
+        
+        var x_speed = 0;
+        var y_speed = 0;
+        
+        var move = function(){
+          snake_hPos += 10 * x_speed;
+          snake_vPos += 10 * y_speed;
+          console.log(snake_hPos, snake_vPos, x0,y0,x_max,y_max)
+          if((snake_hPos > field.offsetLeft)||(snake_hPos < (field.offsetLeft + fieldWidth))){
+            x_speed = 0;
+            y_speed = 0;
+            //console.log(snake_hPos > x_max);
+            //alert("Выход за границу x!!!");
+          }
+          
+          if((snake_vPos > field.offsetTop)||(snake_vPos < (field.offsetTop + field.offsetHeight))){
+            x_speed = 0;
+            y_speed = 0;
+            //console.log(snake_vPos > y_max);
+            //alert("Выход за границу y!!!");
+          }
+          
+          var i = 1
+          //console.log(i++);
+          snake_head.style.left = snake_hPos + "px";
+          snake_head.style.top = snake_vPos + "px";
+        }
+        
+        var timerId = setInterval(move, 200);
+          
+        onkeydown = function(ek){
+          console.log(ek);
+          console.log(ek.key);
+          var key = ek.key;
+          switch(key){
+            case 'ArrowRight':
+              console.log('Вправо');
+              if(!x_speed){
+                y_speed = 0;
+                x_speed = 1;
+              }
+              break;
+            case 'ArrowLeft':
+              if(!x_speed){
+                y_speed = 0;
+                x_speed = -1;
+              }
+              break;
+            case 'ArrowUp':
+              if(!y_speed){
+                x_speed = 0;
+                y_speed = -1;
+              }
+              break;
+            case 'ArrowDown':
+              if(!y_speed){
+                x_speed = 0;
+                y_speed = 1;
+              }
+              break;
+            default:
+              
+              x_speed = 0;
+              y_speed = 0;
+              break;
+          }
+        }
+      }
+      //модификация для GIT2
+      var snake = new Snake();
+    }
+    </script>
+  </body>
+</html>

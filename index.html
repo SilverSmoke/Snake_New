@@ -11,21 +11,21 @@
       top:100px;
       margin-left:auto;
       margin-right:auto;
-      border:solid red 5px;
     }
     .snake_head{
-      position:absolute;
+      position:fixed;
       width:10px;
       height:10px;
       background:yellow;
-      border-radius:5px 5px 5px 5px;
+      border-radius:4px 4px 4px 4px;
     }
     .snake_tail{
-      position:absolute;
-      width:10px;
-      height:10px;
-      background:red;
-      border-radius:5px 5px 5px 5px;
+      position:fixed;
+      width:15px;
+      height:15px;
+      background: brown;
+      border: black 1px solid;
+      border-radius:4px 4px 4px 4px;
     }
     </style>
   </head>
@@ -43,11 +43,11 @@
     onload = function(){
       //console.log("Ура Работает1!!!");next
       var field = document.getElementById("field");
-      var x0 = field.offsetLeft;
-      var y0 = field.offsetTop;
-      var x_max = x0 + field.offsetWidth;
-      var y_max = y0 + field.offsetHeight;
-      console.log(x0,y0,x_max,y_max);//test
+      var x_0 = field.offsetLeft;
+      var y_0 = field.offsetTop;
+      var x_max = x_0 + field.offsetWidth;
+      var y_max = y_0 + field.offsetHeight;
+      console.log(x_0,y_0,x_max,y_max);//test
       
       var Snake = function(){
         var snake = [];
@@ -100,8 +100,18 @@
             move(section - 1);
           }else{
             
-            posX += 10 * x_speed;
-            posY += 10 * y_speed;
+            posX += 15 * x_speed;
+            posY += 15 * y_speed;
+            
+            if((posX >= (field.offsetLeft + field.offsetWidth - 15))||(posX < field.offsetLeft + 5)){
+              console.log(field.offsetLeft, field.offsetWidth, 'x', posX, posY);
+              clearInterval(timerId);
+            }else if((posY >= (field.offsetTop + field.offsetHeight - 15))||(posY < field.offsetTop + 5)){
+              clearInterval(timerId);
+              console.log(field.offsetTop, field.offsetHeight, 'y', posX, posY);
+            }
+            
+            
             posX1 = posX;
             posY1 = posY;
             

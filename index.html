@@ -14,9 +14,10 @@
     }
     .snake_head{
       position:fixed;
-      width:10px;
-      height:10px;
-      background:yellow;
+      width:15px;
+      height:15px;
+      background:gray;
+      border: 1px solid black;
       border-radius:4px 4px 4px 4px;
     }
     .snake_tail{
@@ -36,9 +37,7 @@
     </div>
     
     <script>
-    onclick = function(e){
-      console.log(e);
-    }
+    
     "use strict"
     onload = function(){
       //console.log("Ура Работает1!!!");next
@@ -48,6 +47,25 @@
       var x_max = x_0 + field.offsetWidth;
       var y_max = y_0 + field.offsetHeight;
       console.log(x_0,y_0,x_max,y_max);//test
+      
+      
+      
+      
+      onclick = function(e){
+      console.log(e);
+      
+      mix_sprite(e.target.offsetLeft, e.target.offsetTop);
+      
+      }
+      
+      function mix_sprite(x, y){
+        var i = field.children.length;
+        console.log(i);
+      }
+      
+      
+      
+      
       
       var Snake = function(){
         var snake = [];
@@ -93,10 +111,7 @@
             
             posX1 = snake[section - 1].offsetLeft;
             posY1 = snake[section - 1].offsetTop;
-            //var posX1 = posX;
-            //var posY1 = posY;
-            //console.log(posX1);
-            //console.log(posY1);
+
             move(section - 1);
           }else{
             
@@ -123,12 +138,6 @@
         }
         
         var timerId;
-        
-        console.log(timerId);
-        console.log(timerId = setInterval(move, 100, snake.length - 1));
-        console.log(timerId);
-        //console.log(clearInterval(timerId));
-        console.log(timerId);
         
         function go(){
           clearInterval(timerId);

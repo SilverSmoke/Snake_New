@@ -143,7 +143,7 @@
             posX1 = posX;
             posY1 = posY;
             if(mix_sprite(posX1, posY1)==0){
-              clearInterval(timerId);
+              //clearInterval(timerId);
             }
           }
           
@@ -166,11 +166,14 @@
           for(var i = 0; i < sprites.length; i++){
             if((x >= sprites[i].offsetLeft)&&(x <= sprites[i].offsetLeft + sprites[i].offsetWidth)){
               if((y >= sprites[i].offsetTop)&&(y <= sprites[i].offsetTop + sprites[i].offsetHeight)){
-                console.log("совмещение", i, sprites[i]);
-                sprites[i].remove();
-                new Apple;
-                i = 0;
-                break;
+                console.log("совмещение", i, sprites[i].className);
+                if(sprites[i].className = 'apples'){
+                  sprites[i].remove();
+                  new Apple;
+                }else if(sprites[i].className = 'snake_tail'){
+                  i = 0;
+                  break;
+                }
               }
             }
           }

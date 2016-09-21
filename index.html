@@ -14,26 +14,34 @@
     }
     .snake_head{
       position:fixed;
-      width:15px;
-      height:15px;
+      width:9px;
+      height:9px;
       background:gray;
       border: 1px solid black;
       border-radius:4px 4px 4px 4px;
     }
     .snake_tail{
       position:fixed;
-      width:15px;
-      height:15px;
+      width:9px;
+      height:9px;
       background: brown;
       border: black 1px solid;
       border-radius:4px 4px 4px 4px;
+    }
+    .apples{
+      position:fixed;
+      background:yellow;
+      width: 15px;
+      height: 15px;
+      border: red 1px solid;
+      border-radius: 10px 10px 10px 10px;
     }
     </style>
   </head>
   <body>
     
     <div class="field" id="field">
-    
+      
     </div>
     
     <script>
@@ -54,16 +62,21 @@
       onclick = function(e){
       console.log(e);
       
-      mix_sprite(e.target.offsetLeft, e.target.offsetTop);
+      
       
       }
       
-      function mix_sprite(x, y){
-        var i = field.children.length;
-        console.log(i);
+      
+      
+      var Apple = function(){
+        var apple = document.createElement('div');
+        apple.className = 'apples';
+        
+        apple.style.left = Math.random() * (field.offsetWidth - 20) + field.offsetLeft + 'px';
+        apple.style.top = Math.random() * (field.offsetHeight - 20) + field.offsetTop + 'px';
+        
+        field.appendChild(apple);
       }
-      
-      
       
       
       
@@ -107,7 +120,7 @@
           var posY1;
           
           
-          if(section > 0){
+          if(section){
             
             posX1 = snake[section - 1].offsetLeft;
             posY1 = snake[section - 1].offsetTop;
@@ -129,7 +142,9 @@
             
             posX1 = posX;
             posY1 = posY;
-            
+            if(mix_sprite(posX1, posY1)==0){
+              clearInterval(timerId);
+            }
           }
           
           snake[section].style.left = posX1 + "px";
@@ -145,7 +160,22 @@
         }
         
         
-          
+        function mix_sprite(x, y){
+          var sprites = field.children;
+          //console.log(sprites.length);
+          for(var i = 0; i < sprites.length; i++){
+            if((x >= sprites[i].offsetLeft)&&(x <= sprites[i].offsetLeft + sprites[i].offsetWidth)){
+              if((y >= sprites[i].offsetTop)&&(y <= sprites[i].offsetTop + sprites[i].offsetHeight)){
+                console.log("совмещение", i, sprites[i]);
+                sprites[i].remove();
+                new Apple;
+                i = 0;
+                break;
+              }
+            }
+          }
+          return i;
+        }
           
           
         onkeydown = function(ek){
@@ -194,6 +224,10 @@
       }
       //модификация для GIT2
       var snake = new Snake();
+      
+      for(var i = 0; i < 2; i++){
+        new Apple;
+      }
     }
     </script>
   </body>

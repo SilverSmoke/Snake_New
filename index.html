@@ -171,6 +171,8 @@
                   sprites[i].remove();
                   new Apple;
                 }else if(sprites[i].className = 'snake_tail'){
+                  clearInterval(timerId);
+                  snake.unset();
                   i = 0;
                   break;
                 }
